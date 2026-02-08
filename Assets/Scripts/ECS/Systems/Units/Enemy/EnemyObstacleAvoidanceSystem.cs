@@ -27,8 +27,9 @@ public partial struct EnemyObstacleAvoidanceSystem : ISystem
     }
 }
 
-[BurstCompile]
+
 [WithAll(typeof(EnemyTag))]
+[BurstCompile]
 public partial struct ObstacleAvoidanceJob : IJobEntity
 {
     [ReadOnly] public CollisionWorld CollisionWorld;

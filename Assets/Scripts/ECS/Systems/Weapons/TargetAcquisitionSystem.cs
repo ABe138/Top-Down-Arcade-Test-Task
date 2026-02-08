@@ -3,10 +3,11 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-[BurstCompile]
 [UpdateBefore(typeof(TransformSystemGroup))]
+[BurstCompile]
 public partial struct TargetAcquisitionSystem : ISystem
 {
+    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PlayerTag>();

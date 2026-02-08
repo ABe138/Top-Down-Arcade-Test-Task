@@ -3,8 +3,10 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+[BurstCompile]
 public partial struct EnemyFollowPlayerSystem : ISystem
 {
+    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PlayerTag>();
@@ -28,8 +30,8 @@ public partial struct EnemyFollowPlayerSystem : ISystem
     }
 }
 
-[BurstCompile]
 [WithAll(typeof(EnemyTag))]
+[BurstCompile]
 public partial struct EnemyFollowPlayerJob : IJobEntity
 {
     public float2 PlayerPosition;

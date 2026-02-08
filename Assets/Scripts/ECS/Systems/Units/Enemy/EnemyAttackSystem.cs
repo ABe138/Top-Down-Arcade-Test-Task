@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 [UpdateAfter(typeof(EnemyFollowPlayerSystem))]
+[BurstCompile]
 public partial struct EnemyAttackSystem : ISystem
 {
     [BurstCompile]

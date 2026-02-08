@@ -3,12 +3,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-public struct DropData : IComponentData
-{
-    public float DropChance;
-    public Entity DropEntity;
-}
-
 [UpdateAfter(typeof(DamageProcessingSystem))]
 [UpdateBefore(typeof(DestroyEntitySystem))]
 [BurstCompile]

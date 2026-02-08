@@ -1,6 +1,7 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
 
+[BurstCompile]
 public partial struct DamageProcessingSystem : ISystem
 {
     [BurstCompile]
@@ -23,20 +24,6 @@ public partial struct DamageProcessingSystem : ISystem
             {
                 SystemAPI.SetComponentEnabled<UpdateHealthUIFlag>(entity, true);
             }
-        }
-    }
-}
-
-[UpdateBefore(typeof(DestroyEntitySystem))]
-public partial struct UpdatePlayerHealthUISystem : ISystem
-{
-    public void OnUpdate(ref SystemState state)
-    {
-        if (PlayerHUDManager.Instance == null) return;
-        foreach (var (currentHealth, maxHealth, updateFlag) in SystemAPI.Query<RefRO<CurrentHitPoints>, RefRO<MaxHitPoints>, EnabledRefRW<UpdateHealthUIFlag>>())
-        {
-            PlayerHUDManager.Instance.UpdatePlayerHealthText(currentHealth.ValueRO.Value, maxHealth.ValueRO.Value);
-            updateFlag.ValueRW = false;
         }
     }
 }

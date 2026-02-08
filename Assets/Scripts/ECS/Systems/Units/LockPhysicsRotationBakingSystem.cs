@@ -5,6 +5,7 @@ using Unity.Physics;
 
 [WorldSystemFilter(WorldSystemFilterFlags.BakingSystem)]
 [UpdateInGroup(typeof(PostBakingSystemGroup))]
+[BurstCompile]
 public partial struct LockPhysicsRotationBakingSystem : ISystem
 {
     [BurstCompile]

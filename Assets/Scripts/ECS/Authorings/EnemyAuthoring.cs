@@ -11,6 +11,12 @@ public struct EnemyAttack : IComponentData
     public int Damage;
 }
 
+public struct DropData : IComponentData
+{
+    public float DropChance;
+    public Entity DropEntity;
+}
+
 public struct ObstacleAvoidanceData : IComponentData
 {
     public float DetectionDistance;

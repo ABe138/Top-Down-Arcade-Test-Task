@@ -7,7 +7,8 @@ using Unity.Physics;
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateBefore(typeof(PhysicsSystemGroup))]
-public partial struct MoveSystem : ISystem
+[BurstCompile]
+public partial struct UnitMoveSystem : ISystem
 {
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
