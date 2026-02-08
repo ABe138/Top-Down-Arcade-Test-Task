@@ -21,7 +21,7 @@ public partial struct TargetAcquisitionSystem : ISystem
         var nearestEnemy = Entity.Null;
         var nearestPos = float3.zero;
 
-        foreach (var (transform, entity) in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<EnemyTag, IsAlive>().WithEntityAccess())
+        foreach (var (transform, entity) in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<EnemyTag>().WithDisabled<DestroyEntityFlag>().WithEntityAccess())
         {
             var distSq = math.distancesq(playerPos, transform.ValueRO.Position);
             if (distSq < minDistSq)

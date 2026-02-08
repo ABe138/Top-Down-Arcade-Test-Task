@@ -6,7 +6,7 @@ public partial struct DamageProcessingSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        foreach (var (hitPoints, damageBuffer, entity) in SystemAPI.Query<RefRW<CurrentHitPoints>, DynamicBuffer<IncomingDamage>>().WithAll<IsAlive>().WithEntityAccess())
+        foreach (var (hitPoints, damageBuffer, entity) in SystemAPI.Query<RefRW<CurrentHitPoints>, DynamicBuffer<IncomingDamage>>().WithDisabled<DestroyEntityFlag>().WithEntityAccess())
         {
             foreach (var damage in damageBuffer)
             {
@@ -16,7 +16,7 @@ public partial struct DamageProcessingSystem : ISystem
 
             if (hitPoints.ValueRO.Value <= 0) 
             {
-                SystemAPI.SetComponentEnabled<IsAlive>(entity, false);
+                SystemAPI.SetComponentEnabled<DestroyEntityFlag>(entity, true);
             }
         }
     }

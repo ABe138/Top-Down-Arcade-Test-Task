@@ -16,7 +16,7 @@ public partial struct EnemyAttackSystem : ISystem
     {
         var playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
 
-        if (!SystemAPI.IsComponentEnabled<IsAlive>(playerEntity)) return;
+        if (SystemAPI.IsComponentEnabled<DestroyEntityFlag>(playerEntity)) return;
 
         var playerTransform = SystemAPI.GetComponentRO<LocalTransform>(playerEntity);
         var playerDamageBuffer = SystemAPI.GetBuffer<IncomingDamage>(playerEntity);

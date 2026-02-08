@@ -1,5 +1,5 @@
+using UnityEngine;
 using Unity.Entities;
-using Unity.Mathematics;
 
 public struct ProjectileTag : IComponentData { }
 
@@ -9,7 +9,7 @@ public struct ProjectileData : IComponentData
     public float TimeRemaining;
 }
 
-public class ProjectileAuthoring : UnityEngine.MonoBehaviour
+public class ProjectileAuthoring : MonoBehaviour
 {
     private class Baker : Baker<ProjectileAuthoring>
     {
@@ -18,6 +18,8 @@ public class ProjectileAuthoring : UnityEngine.MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent<ProjectileTag>(entity);
             AddComponent<ProjectileData>(entity);
+            AddComponent<DestroyEntityFlag>(entity);
+            SetComponentEnabled<DestroyEntityFlag>(entity, false);
         }
     }
 }

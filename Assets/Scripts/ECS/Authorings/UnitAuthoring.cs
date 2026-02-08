@@ -28,9 +28,6 @@ public struct IncomingDamage : IBufferElementData
     public int Value;
 }
 
-public struct IsAlive : IComponentData, IEnableableComponent { }
-
-
 public class UnitAuthoring : MonoBehaviour
 {
     public float MoveSpeed;
@@ -47,8 +44,8 @@ public class UnitAuthoring : MonoBehaviour
             AddComponent(entity, new MaxHitPoints { Value = authoring.HitPoints });
             AddComponent(entity, new CurrentHitPoints { Value = authoring.HitPoints });
             AddBuffer<IncomingDamage>(entity);
-            AddComponent<IsAlive>(entity);
-            SetComponentEnabled<IsAlive>(entity, true);
+            AddComponent<DestroyEntityFlag>(entity);
+            SetComponentEnabled<DestroyEntityFlag>(entity, false);
         }
     }
 }

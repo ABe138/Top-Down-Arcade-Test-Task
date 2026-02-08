@@ -1,20 +1,32 @@
-using Unity.Burst;
 using Unity.Entities;
 
-[UpdateAfter(typeof(DamageProcessingSystem))]
-public partial struct DestroyUnitSystem : ISystem
+public struct DestroyEntityFlag : IComponentData, IEnableableComponent { }
+
+[UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
+[UpdateBefore(typeof(EndSimulationEntityCommandBufferSystem))]
+public partial struct DestroyEntitySystem : ISystem
 {
-    [BurstCompile]
+    public void OnCreate(ref SystemState state)
+    {
+        state.RequireForUpdate<BeginInitializationEntityCommandBufferSystem.Singleton>();
+        state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
+    }
+
     public void OnUpdate(ref SystemState state)
     {
-        var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
+        var endEcbSystem = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+        var endEcb = endEcbSystem.CreateCommandBuffer(state.WorldUnmanaged);
+        var beginEcbSystem = SystemAPI.GetSingleton<BeginInitializationEntityCommandBufferSystem.Singleton>();
+        var beginEcb = beginEcbSystem.CreateCommandBuffer(state.WorldUnmanaged);
 
-        foreach (var (_, entity) in SystemAPI.Query<RefRO<IsAlive>>().WithDisabled<IsAlive>().WithEntityAccess())
+        foreach (var (_, entity) in SystemAPI.Query<DestroyEntityFlag>().WithEntityAccess())
         {
-            ecb.DestroyEntity(entity);
-        }
+            if (SystemAPI.HasComponent<PlayerTag>(entity))
+            {
+                //player destruction event
+            }
 
-        ecb.Playback(state.EntityManager);
-        ecb.Dispose();
+            endEcb.DestroyEntity(entity);
+        }
     }
 }

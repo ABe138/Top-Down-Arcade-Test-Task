@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -17,7 +18,7 @@ public partial struct EnemySpawnSystem : ISystem
         var playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
         var playerPos = SystemAPI.GetComponentRO<LocalTransform>(playerEntity).ValueRO.Position;
 
-        var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
+        var ecb = new EntityCommandBuffer(Allocator.Temp);
 
         foreach (var spawnData in SystemAPI.Query<RefRW<EnemySpawnData>>())
         {
@@ -49,11 +50,7 @@ public partial struct EnemySpawnSystem : ISystem
 
         var distance = random.NextFloat(minDistance, maxDistance);
 
-        var offset = new float3(
-            math.cos(angle) * distance,
-            0f,
-            math.sin(angle) * distance
-        );
+        var offset = new float3(math.cos(angle) * distance, 0f, math.sin(angle) * distance);
 
         return playerPos + offset;
     }

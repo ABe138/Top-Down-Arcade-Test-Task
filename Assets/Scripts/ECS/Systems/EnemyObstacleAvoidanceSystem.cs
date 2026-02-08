@@ -95,10 +95,7 @@ public partial struct ObstacleAvoidanceJob : IJobEntity
         var proximityFactor = 1f - forwardFraction;
         var blendFactor = avoidance.AvoidanceStrength * proximityFactor;
 
-        var blendedDirection = math.lerp(
-            normalizedForward,
-            math.normalize(avoidanceDir),
-            blendFactor);
+        var blendedDirection = math.lerp(normalizedForward, math.normalize(avoidanceDir), blendFactor);
 
         blendedDirection = math.normalize(blendedDirection);
         direction.Value = new float2(blendedDirection.x, blendedDirection.z);

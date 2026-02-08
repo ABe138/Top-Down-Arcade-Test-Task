@@ -15,7 +15,7 @@ public partial struct EnemyFollowPlayerSystem : ISystem
     {
         var playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
 
-        if (!SystemAPI.IsComponentEnabled<IsAlive>(playerEntity)) return;
+        if (SystemAPI.IsComponentEnabled<DestroyEntityFlag>(playerEntity)) return;
 
         var playerTransform = SystemAPI.GetComponentRO<LocalTransform>(playerEntity);
 

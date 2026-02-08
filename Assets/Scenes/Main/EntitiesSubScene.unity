@@ -1953,7 +1953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnPrefab: {fileID: 9142674260546898773, guid: 46f7f071e38c8494990bb8c8a569b872, type: 3}
-  SpawnCooldown: 7
+  SpawnCooldown: 1
 --- !u!4 &1661377459
 Transform:
   m_ObjectHideFlags: 0

@@ -273,7 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 3
   RotationSpeed: 9
-  HitPoints: 10
+  HitPoints: 100
 --- !u!114 &4140368661169301942
 MonoBehaviour:
   m_ObjectHideFlags: 0

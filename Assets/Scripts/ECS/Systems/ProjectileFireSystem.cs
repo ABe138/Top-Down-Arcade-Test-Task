@@ -23,9 +23,7 @@ public partial struct ProjectileFireSystem : ISystem
         var deltaTime = SystemAPI.Time.DeltaTime;
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (weaponData, config, target) in
-            SystemAPI.Query<RefRW<WeaponData>, RefRO<ProjectileWeaponConfig>, RefRO<NearestEnemyTarget>>()
-                .WithAll<WeaponTag>())
+        foreach (var (weaponData, config, target, weaponEntity) in SystemAPI.Query<RefRW<WeaponData>, RefRO<ProjectileWeaponConfig>, RefRO<NearestEnemyTarget>>().WithAll<WeaponTag>().WithEntityAccess())
         {
             weaponData.ValueRW.TimeSinceLastAttack += deltaTime;
 
@@ -38,7 +36,7 @@ public partial struct ProjectileFireSystem : ISystem
             weaponData.ValueRW.TimeSinceLastAttack = 0f;
 
             var direction = math.normalize(target.ValueRO.TargetPosition - playerPos);
-            var spawnPos = playerPos + new float3(0f, 0.5f, 0f);
+            var spawnPos = playerPos + SystemAPI.GetComponentRO<LocalTransform>(weaponEntity).ValueRO.Position;
 
             var projectileCount = config.ValueRO.ProjectileCount;
             var spreadAngleRad = math.radians(config.ValueRO.SpreadAngle);

@@ -86,6 +86,59 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2706466612520096166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6225024670573012210}
+  - component: {fileID: 1203814727153473164}
+  m_Layer: 7
+  m_Name: Weapon_Spread
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6225024670573012210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706466612520096166}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5809150057157908564}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1203814727153473164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706466612520096166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b2a714d2d98d9459dcafc9d50de47b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
+  BaseDamage: 40
+  Cooldown: 0.8
+  ProjectilePrefab: {fileID: 5547720820637338610, guid: 3a7e37a421138344b82d93d2782adf2e, type: 3}
+  ProjectileSpeed: 20
+  ProjectileLifetime: 2
+  ProjectileCount: 5
+  SpreadAngle: 15
+  AreaRadius: 3
 --- !u!1 &3627371912195919549
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,11 +270,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  BaseDamage: 10
-  Cooldown: 1
+  BaseDamage: 25
+  Cooldown: 0.33
   ProjectilePrefab: {fileID: 5547720820637338610, guid: 0152aeec8d6107a408ab02e53facb7d1, type: 3}
   ProjectileSpeed: 15
-  ProjectileRange: 20
+  ProjectileLifetime: 2
   ProjectileCount: 1
   SpreadAngle: 15
   AreaRadius: 3
@@ -348,6 +401,7 @@ Transform:
   - {fileID: 6777952123382316471}
   - {fileID: 6307865789072135631}
   - {fileID: 4171440697879877856}
+  - {fileID: 6225024670573012210}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &8774471579897702290
