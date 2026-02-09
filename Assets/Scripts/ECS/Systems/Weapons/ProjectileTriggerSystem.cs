@@ -21,13 +21,17 @@ public partial struct ProjectileTriggerSystem : ISystem
         var enemyLookup = SystemAPI.GetComponentLookup<EnemyTag>(true);
         var destroyEntityLookup = SystemAPI.GetComponentLookup<DestroyEntityFlag>();
         var damageBufferLookup = SystemAPI.GetBufferLookup<IncomingDamage>();
+        var piercingDataLookup = SystemAPI.GetComponentLookup<PiercingData>();
+        var hitTargetBufferLookup = SystemAPI.GetBufferLookup<HitTarget>();
 
         state.Dependency = new ProjectileTriggerJob
         {
             ProjectileLookup = projectileLookup,
             EnemyLookup = enemyLookup,
             DestroyEntityLookup = destroyEntityLookup,
-            DamageBufferLookup = damageBufferLookup
+            DamageBufferLookup = damageBufferLookup,
+            PiercingDataLookup = piercingDataLookup,
+            HitTargetBufferLookup = hitTargetBufferLookup
         }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
 
         state.Dependency.Complete();
@@ -42,6 +46,8 @@ public struct ProjectileTriggerJob : ITriggerEventsJob
 
     public ComponentLookup<DestroyEntityFlag> DestroyEntityLookup;
     public BufferLookup<IncomingDamage> DamageBufferLookup;
+    public ComponentLookup<PiercingData> PiercingDataLookup;
+    public BufferLookup<HitTarget> HitTargetBufferLookup;
 
     public void Execute(TriggerEvent triggerEvent)
     {
@@ -68,13 +74,41 @@ public struct ProjectileTriggerJob : ITriggerEventsJob
 
         if (!DestroyEntityLookup.HasComponent(enemyEntity) || DestroyEntityLookup.IsComponentEnabled(enemyEntity)) return;
 
-        var projectileData = ProjectileLookup[projectileEntity];
+        // Check if projectile already hit this target
+        if (HitTargetBufferLookup.HasBuffer(projectileEntity))
+        {
+            var hitBuffer = HitTargetBufferLookup[projectileEntity];
+            foreach (var hit in hitBuffer)
+            {
+                if (hit.Value == enemyEntity)
+                    return;
+            }
+            hitBuffer.Add(new HitTarget { Value = enemyEntity });
+        }
+
+        // Apply damage
         if (DamageBufferLookup.HasBuffer(enemyEntity))
         {
             var damageBuffer = DamageBufferLookup[enemyEntity];
+            var projectileData = ProjectileLookup[projectileEntity];
             damageBuffer.Add(new IncomingDamage { Value = (int)projectileData.Damage });
         }
 
-        DestroyEntityLookup.SetComponentEnabled(projectileEntity, true);
+        // Check pierce count and destroy if max reached
+        if (PiercingDataLookup.HasComponent(projectileEntity))
+        {
+            var piercingData = PiercingDataLookup[projectileEntity];
+            piercingData.CurrentHitCount++;
+            PiercingDataLookup[projectileEntity] = piercingData;
+
+            if (piercingData.CurrentHitCount >= piercingData.MaxPierceCount)
+            {
+                DestroyEntityLookup.SetComponentEnabled(projectileEntity, true);
+            }
+        }
+        else
+        {
+            DestroyEntityLookup.SetComponentEnabled(projectileEntity, true);
+        }
     }
 }

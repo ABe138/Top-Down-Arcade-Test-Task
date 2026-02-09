@@ -63,6 +63,12 @@ public partial struct ProjectileFireSystem : ISystem
                     TimeRemaining = config.ValueRO.ProjectileLifetime
                 });
 
+                ecb.SetComponent(projectile, new PiercingData
+                {
+                    MaxPierceCount = config.ValueRO.PierceCount,
+                    CurrentHitCount = 0
+                });
+
                 ecb.SetComponent(projectile, new PhysicsVelocity
                 {
                     Linear = rotatedDir * config.ValueRO.ProjectileSpeed,

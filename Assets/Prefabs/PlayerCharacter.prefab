@@ -137,6 +137,7 @@ MonoBehaviour:
   ProjectileLifetime: 2
   ProjectileCount: 5
   SpreadAngle: 15
+  PierceCount: 1
 --- !u!1 &3627371912195919549
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,6 +275,7 @@ MonoBehaviour:
   ProjectileLifetime: 2
   ProjectileCount: 1
   SpreadAngle: 15
+  PierceCount: 1
 --- !u!1 &4222154744512228759
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +491,7 @@ GameObject:
   - component: {fileID: 5285809343607614820}
   - component: {fileID: 6341620610740893826}
   m_Layer: 7
-  m_Name: Weapon_RailGun
+  m_Name: Weapon_Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -529,3 +531,4 @@ MonoBehaviour:
   ProjectileLifetime: 1.5
   ProjectileCount: 1
   SpreadAngle: 0
+  PierceCount: 5

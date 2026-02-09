@@ -31,6 +31,7 @@ public struct ProjectileWeaponConfig : IComponentData
     public float ProjectileLifetime;
     public int ProjectileCount;
     public float SpreadAngle;
+    public int PierceCount;
 }
 
 public struct AreaWeaponConfig : IComponentData
@@ -48,6 +49,7 @@ public class WeaponAuthoring : MonoBehaviour
     public float ProjectileLifetime = 2f;
     public int ProjectileCount = 1;
     public float SpreadAngle = 15f;
+    public int PierceCount = 1;
 
     private class Baker : Baker<WeaponAuthoring>
     {
@@ -71,7 +73,8 @@ public class WeaponAuthoring : MonoBehaviour
                 ProjectileSpeed = authoring.ProjectileSpeed,
                 ProjectileLifetime = authoring.ProjectileLifetime,
                 ProjectileCount = authoring.ProjectileCount,
-                SpreadAngle = authoring.SpreadAngle
+                SpreadAngle = authoring.SpreadAngle,
+                PierceCount = authoring.PierceCount
             });
         }
     }
