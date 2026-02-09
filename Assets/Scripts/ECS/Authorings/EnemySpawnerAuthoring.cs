@@ -13,10 +13,13 @@ public struct EnemySpawnData : IComponentData
 
 public class EnemySpawnerAuthoring : MonoBehaviour
 {
+    [Header("Spawn Settings")]
     public GameObject SpawnPrefab;
+    public float SpawnCooldown;
+
+    [Header("Spawn Zone")]
     public float SpawnDistance = 10f;
     public float SpawnOffset = 5f;
-    public float SpawnCooldown;
 
     public class Baker : Baker<EnemySpawnerAuthoring>
     {
