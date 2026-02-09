@@ -1,19 +1,23 @@
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-[UpdateBefore(typeof(TransformSystemGroup))]
+[BurstCompile]
 public partial struct PlayerSpawnSystem : ISystem
 {
+    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<Respawn>();
         state.RequireForUpdate<PlayerSpawnData>();
     }
 
+    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
+        var ecbSystem = SystemAPI.GetSingleton<BeginInitializationEntityCommandBufferSystem.Singleton>();
+        var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
 
         foreach (var (spawnTag, spawnData, entity) in SystemAPI.Query<RefRW<Respawn>, RefRO<PlayerSpawnData>>().WithEntityAccess())
         {
@@ -21,8 +25,5 @@ public partial struct PlayerSpawnSystem : ISystem
             ecb.SetComponent(player, LocalTransform.FromPosition(float3.zero));
             ecb.SetComponentEnabled<Respawn>(entity, false);
         }
-
-        ecb.Playback(state.EntityManager);
-        ecb.Dispose();
     }
 }

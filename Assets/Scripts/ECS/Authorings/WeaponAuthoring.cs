@@ -4,15 +4,8 @@ using UnityEngine;
 
 public struct WeaponTag : IComponentData { }
 
-public enum WeaponType : byte
-{
-    Projectile = 0,
-    Area = 1
-}
-
 public struct WeaponData : IComponentData
 {
-    public WeaponType Type;
     public float Damage;
     public float Cooldown;
     public float TimeSinceLastAttack;
@@ -47,7 +40,6 @@ public struct AreaWeaponConfig : IComponentData
 
 public class WeaponAuthoring : MonoBehaviour
 {
-    public WeaponType Type;
     public float BaseDamage = 10f;
     public float Cooldown = 1f;
 
@@ -68,7 +60,6 @@ public class WeaponAuthoring : MonoBehaviour
             AddComponent<WeaponTag>(entity);
             AddComponent(entity, new WeaponData
             {
-                Type = authoring.Type,
                 Damage = authoring.BaseDamage,
                 Cooldown = authoring.Cooldown,
                 TimeSinceLastAttack = authoring.Cooldown
@@ -76,26 +67,14 @@ public class WeaponAuthoring : MonoBehaviour
             AddComponent<WeaponOwner>(entity);
             AddComponent<NearestEnemyTarget>(entity);
 
-            switch (authoring.Type)
+            AddComponent(entity, new ProjectileWeaponConfig
             {
-                case WeaponType.Projectile:
-                    AddComponent(entity, new ProjectileWeaponConfig
-                    {
-                        ProjectilePrefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic),
-                        ProjectileSpeed = authoring.ProjectileSpeed,
-                        ProjectileLifetime = authoring.ProjectileLifetime,
-                        ProjectileCount = authoring.ProjectileCount,
-                        SpreadAngle = authoring.SpreadAngle
-                    });
-                    break;
-
-                case WeaponType.Area:
-                    AddComponent(entity, new AreaWeaponConfig
-                    {
-                        Radius = authoring.AreaRadius
-                    });
-                    break;
-            }
+                ProjectilePrefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic),
+                ProjectileSpeed = authoring.ProjectileSpeed,
+                ProjectileLifetime = authoring.ProjectileLifetime,
+                ProjectileCount = authoring.ProjectileCount,
+                SpreadAngle = authoring.SpreadAngle
+            });
         }
     }
 }

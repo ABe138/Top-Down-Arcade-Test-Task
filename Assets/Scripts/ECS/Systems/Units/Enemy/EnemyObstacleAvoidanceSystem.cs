@@ -40,8 +40,7 @@ public partial struct ObstacleAvoidanceJob : IJobEntity
         in ObstacleAvoidanceData avoidance,
         in Entity entity)
     {
-        if (math.lengthsq(direction.Value) < 0.001f)
-            return;
+        if (math.lengthsq(direction.Value) < 0.001f) return;
 
         var position = transform.Position;
         var forward = new float3(direction.Value.x, 0, direction.Value.y);
@@ -49,33 +48,15 @@ public partial struct ObstacleAvoidanceJob : IJobEntity
 
         var rayOrigin = position + new float3(0, 0.5f, 0);
 
-        var forwardBlocked = CastObstacleRay(
-            rayOrigin,
-            normalizedForward,
-            avoidance.DetectionDistance,
-            avoidance.ObstacleLayerMask,
-            out float forwardFraction);
-
-        if (!forwardBlocked)
-            return;
+        var forwardBlocked = CastObstacleRay(rayOrigin, normalizedForward, avoidance.DetectionDistance, avoidance.ObstacleLayerMask, out float forwardFraction);
+        if (!forwardBlocked) return;
 
         var angleRad = math.radians(avoidance.SideRayAngle);
         var rightDir = math.rotate(quaternion.AxisAngle(math.up(), angleRad), normalizedForward);
         var leftDir = math.rotate(quaternion.AxisAngle(math.up(), -angleRad), normalizedForward);
 
-        CastObstacleRay(
-            rayOrigin,
-            rightDir,
-            avoidance.DetectionDistance,
-            avoidance.ObstacleLayerMask,
-            out float rightFraction);
-
-        CastObstacleRay(
-            rayOrigin,
-            leftDir,
-            avoidance.DetectionDistance,
-            avoidance.ObstacleLayerMask,
-            out float leftFraction);
+        CastObstacleRay(rayOrigin, rightDir, avoidance.DetectionDistance, avoidance.ObstacleLayerMask, out float rightFraction);
+        CastObstacleRay(rayOrigin, leftDir, avoidance.DetectionDistance, avoidance.ObstacleLayerMask, out float leftFraction);
 
         var avoidanceDir = float3.zero;
 

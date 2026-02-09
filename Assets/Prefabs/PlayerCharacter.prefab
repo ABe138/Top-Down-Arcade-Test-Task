@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6225024670573012210
 Transform:
   m_ObjectHideFlags: 0
@@ -130,7 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b2a714d2d98d9459dcafc9d50de47b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
   BaseDamage: 40
   Cooldown: 0.8
   ProjectilePrefab: {fileID: 5547720820637338610, guid: 3a7e37a421138344b82d93d2782adf2e, type: 3}
@@ -269,7 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b2a714d2d98d9459dcafc9d50de47b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
   BaseDamage: 25
   Cooldown: 0.33
   ProjectilePrefab: {fileID: 5547720820637338610, guid: 0152aeec8d6107a408ab02e53facb7d1, type: 3}
