@@ -289,11 +289,11 @@ MonoBehaviour:
   AttackRange: 2
   AttackCooldown: 1
   AttackDamage: 5
+  DropPrefab: {fileID: 2028508040553897851, guid: 90ff4a6e7726bd14ea7ae1e11eb96db7, type: 3}
+  DropChance: 0.5
   ObstacleDetectionDistance: 3
   SideRayAngle: 45
   AvoidanceStrength: 1
   ObstacleLayer:
     serializedVersion: 2
     m_Bits: 64
-  DropPrefab: {fileID: 2028508040553897851, guid: 90ff4a6e7726bd14ea7ae1e11eb96db7, type: 3}
-  DropChance: 0.5

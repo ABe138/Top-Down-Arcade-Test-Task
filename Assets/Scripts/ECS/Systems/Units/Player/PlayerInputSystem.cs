@@ -20,4 +20,10 @@ public partial class PlayerInputSystem : SystemBase
             direction.ValueRW.Value = directionInput;
         }
     }
+
+    protected override void OnDestroy()
+    {
+        _input?.Disable();
+        _input?.Dispose();
+    }
 }

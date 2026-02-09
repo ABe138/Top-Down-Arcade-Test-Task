@@ -7,6 +7,11 @@ public partial class CameraFollowPlayerSystem : SystemBase
 {
     private Transform _target;
 
+    protected override void OnCreate()
+    {
+        RequireForUpdate<PlayerTag>();
+    }
+
     protected override void OnUpdate()
     {
         if (_target == null)
