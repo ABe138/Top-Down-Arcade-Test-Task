@@ -11,6 +11,7 @@ public partial struct PlayerSpawnSystem : ISystem
     {
         state.RequireForUpdate<Respawn>();
         state.RequireForUpdate<PlayerSpawnData>();
+        state.RequireForUpdate<BeginInitializationEntityCommandBufferSystem.Singleton>();
     }
 
     [BurstCompile]

@@ -13,6 +13,7 @@ public partial struct ProjectileFireSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PlayerTag>();
+        state.RequireForUpdate<BeginInitializationEntityCommandBufferSystem.Singleton>();
     }
 
     [BurstCompile]
